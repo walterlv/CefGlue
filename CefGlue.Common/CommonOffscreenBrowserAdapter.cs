@@ -16,7 +16,7 @@ namespace Xilium.CefGlue.Common
 
         private Func<CefRectangle> _getViewRectOverride;
 
-        public CommonOffscreenBrowserAdapter(object eventsEmitter, string name, IOffScreenControlHost control, IOffScreenPopupHost popup, ILogger logger, CefRequestContext cefRequestContext = null) 
+        public CommonOffscreenBrowserAdapter(object eventsEmitter, string name, IOffScreenControlHost control, IOffScreenPopupHost popup, ILogger logger, CefRequestContext cefRequestContext = null)
             : base(eventsEmitter, name, control, logger, cefRequestContext) {
 
             Popup = popup;
@@ -43,7 +43,7 @@ namespace Xilium.CefGlue.Common
         private void HandleLostFocus()
         {
             WithErrorHandling(nameof(HandleLostFocus), () =>
-            { 
+            {
                 BrowserHost?.SetFocus(false);
             });
         }
@@ -208,7 +208,7 @@ namespace Xilium.CefGlue.Common
                                 _getViewRectOverride = null;
                                 BrowserHost.WasResized();
                             }
-                        });   
+                        });
                     }
                     else
                     {
@@ -274,6 +274,8 @@ namespace Xilium.CefGlue.Common
 
         protected override void SetupBrowserView(CefWindowInfo windowInfo, int width, int height, IntPtr hostViewHandle)
         {
+            DevTools.SoftBreakpoint($"CommonOffscreenBrowserAdapter.SetupBrowserView() windowInfo=", windowInfo);
+
             AttachEventHandlers(Control);
             AttachEventHandlers(Popup);
 
@@ -303,7 +305,7 @@ namespace Xilium.CefGlue.Common
 
             Control.RenderSurface.Resize(newWidth, newHeight);
             BrowserHost?.WasResized();
-            
+
             _logger.Debug($"Browser resized {newWidth}x{newHeight}");
         }
 

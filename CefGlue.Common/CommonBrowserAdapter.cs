@@ -173,7 +173,7 @@ namespace Xilium.CefGlue.Common
             // Remove leading whitespace from the URL
             url = url.TrimStart();
 
-            // to play safe, load url must be called after OnBrowserCreated(CefBrowser) which runs on CefThreadId.UI, 
+            // to play safe, load url must be called after OnBrowserCreated(CefBrowser) which runs on CefThreadId.UI,
             // otherwise the navigation will be aborted
             ActionTask.Run(() =>
             {
@@ -299,6 +299,7 @@ namespace Xilium.CefGlue.Common
             IsBrowserCreated = true;
 
             var windowInfo = CefWindowInfo.Create();
+            // DevTools.SoftBreakpoint($"CommonBrowserAdapter.CreateBrowser({width}, {height}) windowInfo=", windowInfo);
             SetupBrowserView(windowInfo, width, height, hostViewHandle.Value);
 
             var cefClient = CreateCefClient();
@@ -340,8 +341,12 @@ namespace Xilium.CefGlue.Common
 
         protected virtual void SetupBrowserView(CefWindowInfo windowInfo, int width, int height, IntPtr hostViewHandle)
         {
+            // DevTools.SoftBreakpoint($"CommonBrowserAdapter.SetupBrowserView() [Begin] windowInfo=", windowInfo);
+
             windowInfo.StyleEx |= WindowStyleEx.WS_EX_NOACTIVATE; // disable window activation (prevent stealing focus)
             windowInfo.SetAsChild(hostViewHandle, new CefRectangle(0, 0, width, height));
+
+            // DevTools.SoftBreakpoint($"CommonBrowserAdapter.SetupBrowserView() [End] windowInfo=", windowInfo);
         }
 
         private void HandleJavascriptExecutionEngineContextCreated(CefFrame frame)

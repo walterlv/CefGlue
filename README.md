@@ -42,7 +42,7 @@ dotnet restore -p:Platform=x64
 dotnet build -r linux-x64 -f net6.0 .\CefGlue.BrowserProcess
 
 # 3. Build the demo
-dotnet build --runtime linux-x64 -f net6.0 -c Debug_WindowlessRender --self-contained .\CefGlue.Demo.Avalonia
+dotnet build --runtime linux-x64 -f net6.0 -c debug --self-contained .\CefGlue.Demo.Avalonia
 
 # 4. Copy the CEF distribution from packages\cef.bin.linux64\120.1.8\CEF to the demo output
 # 5. Copy the BrowserProcess from CefGlue.BrowserProcess\bin\Debug\net6.0\linux-x64\publish to the demo output (MUST OVERRIDE the demo output)

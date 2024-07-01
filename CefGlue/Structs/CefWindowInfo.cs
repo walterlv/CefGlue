@@ -147,6 +147,8 @@
 
         public void SetAsChild(IntPtr parentHandle, CefRectangle bounds)
         {
+            DevTools.SoftBreakpoint($"CefWindowInfo.SetAsChild({parentHandle}, {bounds})", this);
+
             ThrowIfDisposed();
 
             Style = WindowStyle.WS_CHILD
@@ -162,6 +164,8 @@
 
         public void SetAsPopup(IntPtr parentHandle, string name)
         {
+            DevTools.SoftBreakpoint($"CefWindowInfo.SetAsPopup({parentHandle}, {name})", this);
+
             ThrowIfDisposed();
 
             Style = WindowStyle.WS_OVERLAPPEDWINDOW
@@ -183,6 +187,8 @@
 
         public void SetAsWindowless(IntPtr parentHandle, bool transparent)
         {
+            DevTools.SoftBreakpoint($"CefWindowInfo.SetAsWindowless({parentHandle}, {transparent})", this);
+
             WindowlessRenderingEnabled = true;
             ParentHandle = parentHandle;
         }

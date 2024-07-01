@@ -56,6 +56,7 @@ namespace Xilium.CefGlue.Avalonia.Platform
             {
                 _hostWindowPlatformHandle = new Window().TryGetPlatformHandle();
             }
+            DevTools.SoftBreakpoint("AvaloniaControl.GetHostWindowPlatformHandle()", _hostWindowPlatformHandle);
             return _hostWindowPlatformHandle;
         }
 
@@ -83,7 +84,7 @@ namespace Xilium.CefGlue.Avalonia.Platform
                     var menu = new ContextMenu();
 
                     menu.Items.Clear();
-                    
+
                     foreach (var menuEntry in menuEntries)
                     {
                         if (menuEntry.IsSeparator)
@@ -141,10 +142,16 @@ namespace Xilium.CefGlue.Avalonia.Platform
 
         public void InitializeRender(IntPtr browserHandle)
         {
-            if (CefRuntime.Platform == CefRuntimePlatform.Windows)
+            DevTools.SoftBreakpoint($"AvaloniaControl.InitializeRender({browserHandle})", _browserView);
+
+            if (CefRuntime.Platform is CefRuntimePlatform.Windows or CefRuntimePlatform.Linux)
             {
+                DevTools.SoftBreakpoint($"AvaloniaControl.InitializeRender({browserHandle}) [Before HostWindow]", browserHandle);
+
                 // store cef window handle, to dispose later
                 _browserView = new HostWindow(browserHandle);
+
+                DevTools.SoftBreakpoint($"AvaloniaControl.InitializeRender({browserHandle}) [After HostWindow]", _browserView);
             }
 
             Dispatcher.UIThread.Post(() =>
